@@ -6,22 +6,22 @@ body {
 .command-card {
     background-color: #ffffff;
     padding: 20px;
-    margin: 20px;
+    margin: 15px;
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für 3D-Effekt */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* 3D Schatten */
     cursor: pointer;
-    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Sanfte Übergänge */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Übergänge für Interaktivität */
     border: 1px solid #e2e8f0;
-    position: relative; /* Für den 3D-Effekt */
+    position: relative; /* 3D Effekt */
 }
 
 .command-card:hover {
-    transform: translateY(-10px) scale(1.05); /* Bewegt den Block nach oben für den 3D-Effekt */
+    transform: translateY(-10px) scale(1.05); /* Hebt den Block an für den 3D Effekt */
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten beim Hover */
 }
 
 .command-card:active {
-    transform: translateY(4px) scale(1); /* Wenn der Block angeklickt wird */
+    transform: translateY(4px) scale(1); /* Blocke drücken für Klick-Effekt */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -165,4 +165,20 @@ textarea {
 
 .transition-all {
     transition: all 0.3s;
+}
+
+.command-card .sql-block {
+    background-color: #f7fafc;
+    padding: 10px;
+    border-radius: 8px;
+    border-left: 5px solid #4c51bf; /* Visuelle Linie links */
+    font-family: 'Courier New', Courier, monospace;
+    color: #2d3748;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+
+.command-card .sql-block pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
