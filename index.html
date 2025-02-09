@@ -7,67 +7,21 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="p-8 bg-gray-100 min-h-screen">
-        <h1 class="text-4xl font-extrabold mb-6 text-blue-700">Lerne SQL-Befehle interaktiv</h1>
+    <div class="container">
+        <header>
+            <h1>Lerne SQL-Befehle interaktiv</h1>
+            <p>Interaktive Übung für SQL-Kommandos, damit du deine Abfragen verbessern kannst.</p>
+        </header>
         
-        <div id="command-list" class="grid grid-cols-3 gap-4">
-            <!-- Dynamisch generierte SQL-Befehle werden hier angezeigt -->
+        <div id="command-list" class="command-list">
+            <!-- Dynamisch generierte SQL-Befehle -->
         </div>
 
-        <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
+        <div id="command-details" class="command-details">
             <!-- Detailansicht des Befehls -->
         </div>
     </div>
 
-    <script>
-        const sqlCommands = [
-            { command: "SELECT", description: "Wählt Daten aus einer Tabelle.", example: "SELECT * FROM kunden;", task: "Finde alle Kunden.", solution: "SELECT * FROM kunden;" },
-            { command: "FROM", description: "Gibt an, aus welcher Tabelle Daten abgefragt werden.", example: "SELECT name FROM kunden;", task: "Zeige alle Namen der Kunden.", solution: "SELECT name FROM kunden;" },
-            { command: "WHERE", description: "Filtert Datensätze anhand einer Bedingung.", example: "SELECT * FROM kunden WHERE plz = '12345';", task: "Finde alle Kunden mit der Postleitzahl '12345'.", solution: "SELECT * FROM kunden WHERE plz = '12345';" },
-            { command: "GROUP BY", description: "Gruppiert die Datensätze anhand eines Kriteriums.", example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;", task: "Zeige die Anzahl der Kunden pro Postleitzahl.", solution: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;" },
-            { command: "HAVING", description: "Setzt eine Bedingung auf die Gruppierung.", example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 5;", task: "Zeige Postleitzahlen mit mehr als 5 Kunden.", solution: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 5;" },
-            { command: "CREATE TABLE", description: "Erstellt eine neue Tabelle.", example: "CREATE TABLE kunden (id INT, name VARCHAR(100));", task: "Erstelle eine Tabelle für Produkte.", solution: "CREATE TABLE produkte (id INT, name VARCHAR(100));" },
-            { command: "DELETE", description: "Löscht Datensätze.", example: "DELETE FROM kunden WHERE id = 1;", task: "Lösche den Kunden mit der ID 1.", solution: "DELETE FROM kunden WHERE id = 1;" },
-            { command: "LIKE", description: "Verwendet Wildcards für die Mustererkennung.", example: "SELECT * FROM kunden WHERE name LIKE 'A%';", task: "Finde alle Kunden, deren Name mit 'A' beginnt.", solution: "SELECT * FROM kunden WHERE name LIKE 'A%';" },
-            { command: "AND", description: "Verknüpft zwei Bedingungen.", example: "SELECT * FROM kunden WHERE plz = '12345' AND name LIKE 'A%';", task: "Finde alle Kunden mit der Postleitzahl '12345' und deren Namen mit 'A' beginnen.", solution: "SELECT * FROM kunden WHERE plz = '12345' AND name LIKE 'A%';" },
-            { command: "OR", description: "Verknüpft zwei Bedingungen mit einer Alternativbedingung.", example: "SELECT * FROM kunden WHERE plz = '12345' OR plz = '54321';", task: "Finde Kunden mit der Postleitzahl '12345' oder '54321'.", solution: "SELECT * FROM kunden WHERE plz = '12345' OR plz = '54321';" },
-            { command: "IN", description: "Prüft, ob ein Wert in einer Liste enthalten ist.", example: "SELECT * FROM kunden WHERE plz IN ('12345', '54321');", task: "Finde Kunden mit der Postleitzahl '12345' oder '54321'.", solution: "SELECT * FROM kunden WHERE plz IN ('12345', '54321');" },
-            { command: "INSERT INTO", description: "Fügt neue Datensätze in eine Tabelle ein.", example: "INSERT INTO kunden (name, plz) VALUES ('Max', '12345');", task: "Füge einen neuen Kunden hinzu.", solution: "INSERT INTO kunden (name, plz) VALUES ('Max', '12345');" },
-            { command: "UPDATE SET", description: "Aktualisiert vorhandene Daten in einer Tabelle.", example: "UPDATE kunden SET name = 'Max' WHERE id = 1;", task: "Ändere den Namen des Kunden mit ID 1.", solution: "UPDATE kunden SET name = 'Max' WHERE id = 1;" },
-            { command: "AVG", description: "Berechnet den Durchschnitt einer Spalte.", example: "SELECT AVG(preis) FROM produkte;", task: "Berechne den Durchschnittspreis der Produkte.", solution: "SELECT AVG(preis) FROM produkte;" },
-            { command: "MAX", description: "Findet den höchsten Wert einer Spalte.", example: "SELECT MAX(preis) FROM produkte;", task: "Finde den teuersten Artikel.", solution: "SELECT MAX(preis) FROM produkte;" },
-            { command: "MIN", description: "Findet den niedrigsten Wert einer Spalte.", example: "SELECT MIN(preis) FROM produkte;", task: "Finde das günstigste Produkt.", solution: "SELECT MIN(preis) FROM produkte;" },
-            { command: "NOW", description: "Gibt das aktuelle Datum und die aktuelle Uhrzeit zurück.", example: "SELECT NOW();", task: "Zeige das aktuelle Datum und die Uhrzeit.", solution: "SELECT NOW();" },
-            { command: "SUM", description: "Berechnet die Summe einer Spalte.", example: "SELECT SUM(preis) FROM produkte;", task: "Berechne die Gesamtkosten der Produkte.", solution: "SELECT SUM(preis) FROM produkte;" },
-            { command: "YEAR", description: "Extrahiert das Jahr aus einem Datum.", example: "SELECT YEAR(datum) FROM bestellungen;", task: "Zeige das Jahr der Bestellung.", solution: "SELECT YEAR(datum) FROM bestellungen;" },
-            { command: "COUNT", description: "Zählt die Anzahl der Datensätze.", example: "SELECT COUNT(*) FROM kunden;", task: "Zähle die Anzahl der Kunden.", solution: "SELECT COUNT(*) FROM kunden;" },
-            { command: "JOIN", description: "Verknüpft Tabellen basierend auf einer gemeinsamen Spalte.", example: "SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;", task: "Zeige die Namen der Kunden und ihre Bestellbeträge.", solution: "SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;" }
-        ];
-
-        // Befehle dynamisch in die HTML-Seite einfügen
-        const commandList = document.getElementById("command-list");
-        sqlCommands.forEach(command => {
-            const commandCard = document.createElement("div");
-            commandCard.classList.add("command-card");
-            commandCard.innerHTML = `
-                <h3>${command.command}</h3>
-                <p><strong>Beschreibung:</strong> ${command.description}</p>
-                <p><strong>Beispiel:</strong></p>
-                <div class="sql-block"><pre>${command.example}</pre></div>
-                <p><strong>Aufgabe:</strong> ${command.task}</p>
-                <button class="cursor-pointer mt-4 text-indigo-600 hover:text-indigo-800" onclick="showSolution('${command.solution}')">Zeige Lösung</button>
-            `;
-            commandList.appendChild(commandCard);
-        });
-
-        function showSolution(solution) {
-            const details = document.getElementById("command-details");
-            details.innerHTML = `
-                <h3 class="text-3xl font-semibold text-indigo-600">Lösung:</h3>
-                <div class="sql-block"><pre>${solution}</pre></div>
-            `;
-            details.classList.remove("hidden");
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
