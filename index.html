@@ -56,11 +56,123 @@
                 solution: /SELECT \* FROM kunden WHERE plz = '12345';/i
             },
             {
+                command: "GROUP BY",
+                description: "Gruppiert Datensätze, die gleiche Werte in bestimmten Spalten haben.",
+                example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;",
+                task: "Erstelle eine Abfrage, die die Anzahl der Kunden pro Postleitzahl gruppiert.",
+                solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz;/i
+            },
+            {
+                command: "HAVING",
+                description: "Filtriert Gruppen nach einer Aggregatfunktion.",
+                example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 10;",
+                task: "Zeige nur Postleitzahlen an, die mehr als 10 Kunden haben.",
+                solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz HAVING COUNT\(\*\) > 10;/i
+            },
+            {
+                command: "CREATE TABLE",
+                description: "Erstellt eine neue Tabelle in der Datenbank.",
+                example: "CREATE TABLE kunden (id INT, name VARCHAR(100), plz VARCHAR(5));",
+                task: "Erstelle eine Tabelle 'produzenten' mit den Spalten id, name und land.",
+                solution: /CREATE TABLE produzenten \(id INT, name VARCHAR\(100\), land VARCHAR\(50\)\);/i
+            },
+            {
+                command: "DELETE",
+                description: "Löscht Datensätze aus einer Tabelle.",
+                example: "DELETE FROM kunden WHERE plz = '12345';",
+                task: "Lösche alle Kunden mit der Postleitzahl '12345'.",
+                solution: /DELETE FROM kunden WHERE plz = '12345';/i
+            },
+            {
+                command: "LIKE",
+                description: "Verwendet Platzhalterzeichen, um Muster zu suchen.",
+                example: "SELECT * FROM kunden WHERE name LIKE 'Max%';",
+                task: "Finde alle Kunden, deren Name mit 'John' beginnt.",
+                solution: /SELECT \* FROM kunden WHERE name LIKE 'John\%';/i
+            },
+            {
+                command: "AND",
+                description: "Verwendet mehrere Bedingungen, die beide erfüllt sein müssen.",
+                example: "SELECT * FROM kunden WHERE plz = '12345' AND name = 'Max';",
+                task: "Finde alle Kunden aus der Postleitzahl '12345' mit dem Namen 'Max'.",
+                solution: /SELECT \* FROM kunden WHERE plz = '12345' AND name = 'Max';/i
+            },
+            {
+                command: "OR",
+                description: "Verwendet mehrere Bedingungen, von denen eine erfüllt sein muss.",
+                example: "SELECT * FROM kunden WHERE plz = '12345' OR plz = '67890';",
+                task: "Finde alle Kunden aus der Postleitzahl '12345' oder '67890'.",
+                solution: /SELECT \* FROM kunden WHERE plz = '12345' OR plz = '67890';/i
+            },
+            {
+                command: "IN",
+                description: "Überprüft, ob ein Wert in einer Liste von Werten vorhanden ist.",
+                example: "SELECT * FROM kunden WHERE plz IN ('12345', '67890');",
+                task: "Zeige alle Kunden, deren Postleitzahl entweder '12345' oder '67890' ist.",
+                solution: /SELECT \* FROM kunden WHERE plz IN \('12345', '67890'\);/i
+            },
+            {
                 command: "INSERT INTO",
-                description: "Fügt neue Datensätze in eine Tabelle ein.",
+                description: "Fügt einen neuen Datensatz in eine Tabelle ein.",
                 example: "INSERT INTO kunden (name, plz) VALUES ('Max Mustermann', '12345');",
                 task: "Füge einen neuen Kunden mit dem Namen 'John Doe' und der Postleitzahl '54321' in die Tabelle 'kunden' ein.",
                 solution: /INSERT INTO kunden \(name, plz\) VALUES \('John Doe', '54321'\);/i
+            },
+            {
+                command: "UPDATE SET",
+                description: "Aktualisiert bestehende Datensätze in einer Tabelle.",
+                example: "UPDATE kunden SET plz = '54321' WHERE name = 'Max Mustermann';",
+                task: "Ändere die Postleitzahl eines Kunden mit dem Namen 'John Doe' auf '98765'.",
+                solution: /UPDATE kunden SET plz = '98765' WHERE name = 'John Doe';/i
+            },
+            {
+                command: "AVG",
+                description: "Berechnet den Durchschnittswert einer Spalte.",
+                example: "SELECT AVG(altersjahr) FROM kunden;",
+                task: "Berechne das durchschnittliche Alter der Kunden.",
+                solution: /SELECT AVG\(altersjahr\) FROM kunden;/i
+            },
+            {
+                command: "MAX",
+                description: "Gibt den höchsten Wert einer Spalte zurück.",
+                example: "SELECT MAX(altersjahr) FROM kunden;",
+                task: "Zeige das maximale Alter der Kunden an.",
+                solution: /SELECT MAX\(altersjahr\) FROM kunden;/i
+            },
+            {
+                command: "MIN",
+                description: "Gibt den niedrigsten Wert einer Spalte zurück.",
+                example: "SELECT MIN(altersjahr) FROM kunden;",
+                task: "Zeige das minimale Alter der Kunden an.",
+                solution: /SELECT MIN\(altersjahr\) FROM kunden;/i
+            },
+            {
+                command: "NOW",
+                description: "Gibt das aktuelle Datum und die Uhrzeit zurück.",
+                example: "SELECT NOW();",
+                task: "Zeige das aktuelle Datum und die Uhrzeit an.",
+                solution: /SELECT NOW\(\);/i
+            },
+            {
+                command: "SUM",
+                description: "Berechnet die Summe einer numerischen Spalte.",
+                example: "SELECT SUM(umsatz) FROM kunden;",
+                task: "Berechne die Summe des Umsatzes aller Kunden.",
+                solution: /SELECT SUM\(umsatz\) FROM kunden;/i
+            },
+            {
+                command: "YEAR",
+                description: "Extrahiert das Jahr aus einem Datumswert.",
+                example: "SELECT YEAR(geburtsdatum) FROM kunden;",
+                task: "Zeige das Jahr der Geburt aller Kunden an.",
+                solution: /SELECT YEAR\(geburtsdatum\) FROM kunden;/i
+            },
+            {
+                command: "COUNT",
+                description: "Zählt die Anzahl der Datensätze.",
+                example: "SELECT COUNT(*) FROM kunden;",
+                task: "Zähle, wie viele Kunden in der Tabelle 'kunden' vorhanden sind.",
+                solution: /SELECT COUNT\(\*\) FROM kunden;/i
             }
         ];
 
