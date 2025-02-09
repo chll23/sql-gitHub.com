@@ -1,75 +1,142 @@
+/* Global Styles */
 body {
-    background-color: #f3f4f6;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f8fafc;
+    color: #4a5568;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    color: #2b6cb0;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 1.125rem;
+    color: #4a5568;
+}
+
+.command-list-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.command-list-container h2 {
+    font-size: 1.5rem;
+    color: #2b6cb0;
+    margin-bottom: 20px;
+}
+
+.command-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.command-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.command-card:hover {
+    transform: translateY(-5px);
+}
+
+.command-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2b6cb0;
+}
+
+.command-description-preview {
+    font-size: 1rem;
+    color: #718096;
+    margin-top: 10px;
+}
+
+.command-details {
+    display: none;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hidden {
+    display: none;
+}
+
+.command-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2b6cb0;
+}
+
+.command-description {
+    font-size: 1.125rem;
+    color: #4a5568;
+    margin-top: 15px;
+}
+
+.command-example {
+    background-color: #f7fafc;
+    padding: 15px;
+    border-radius: 8px;
+    font-size: 1rem;
+    margin-top: 20px;
+    color: #2d3748;
+}
+
+.task-container {
+    margin-top: 30px;
 }
 
 textarea {
     width: 100%;
-    min-height: 100px;
+    height: 100px;
+    padding: 10px;
     border: 2px solid #ddd;
-    padding: 8px;
     border-radius: 8px;
-    resize: none;
-}
-
-.task-container {
-    display: none;
-}
-
-/* Stil für die SQL-Befehls-Boxen */
-.command-card {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    margin: 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-    width: 200px;
-    flex-grow: 1;
-}
-
-.command-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-}
-
-.command-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #4C51BF;
-}
-
-.command-card p {
     font-size: 1rem;
-    color: #4A5568;
     margin-top: 10px;
 }
 
-.command-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+button.submit-btn {
+    background-color: #4c51bf;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
     margin-top: 20px;
 }
 
-/* Styling für das Detail-Panel */
-#command-details {
-    background-color: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+button.submit-btn:hover {
+    background-color: #2c5282;
 }
 
-#task-container {
-    margin-top: 30px;
-}
-
-/* Stil für das Input-Feld und die Feedback-Textanzeige */
 .feedback {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-top: 10px;
+    font-size: 1.125rem;
+    margin-top: 20px;
+    font-weight: 600;
 }
