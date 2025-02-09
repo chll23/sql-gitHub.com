@@ -20,6 +20,25 @@
         .task-container {
             display: none;
         }
+        .command-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        .command-card:hover {
+            transform: translateY(-10px);
+        }
+        .command-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
     </style>
 </head>
 <body>
@@ -29,9 +48,9 @@
         <!-- Index Section -->
         <div class="mb-8">
             <h2 class="text-2xl font-semibold mb-4">Index der SQL-Befehle</h2>
-            <ul id="command-list" class="list-disc pl-6">
+            <div id="command-list" class="command-list">
                 <!-- Hier kommen die SQL-Befehle dynamisch hin -->
-            </ul>
+            </div>
         </div>
 
         <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
@@ -126,16 +145,15 @@
         const commandList = document.getElementById("command-list");
 
         sqlCommands.forEach(command => {
-            const li = document.createElement("li");
-            const link = document.createElement("a");
-            link.href = `#${command.command.toLowerCase()}`;
-            link.classList.add("text-indigo-600");
-            link.textContent = command.command;
+            const div = document.createElement("div");
+            div.classList.add("command-card");
+            div.innerHTML = `
+                <h3 class="text-xl font-semibold text-indigo-700">${command.command}</h3>
+                <p class="mt-2 text-gray-600">${command.description}</p>
+            `;
+            div.addEventListener("click", () => showCommandDetails(command));
 
-            link.addEventListener("click", () => showCommandDetails(command));
-
-            li.appendChild(link);
-            commandList.appendChild(li);
+            commandList.appendChild(div);
         });
 
         // Zeige die Details des ausgewählten Befehls
