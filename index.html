@@ -5,37 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lerne SQL-Befehle interaktiv</title>
     <link href="styles.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <h1>Interaktive SQL Lernhilfe</h1>
-            <p class="description">Lerne SQL mit interaktiven Beispielen und Übungen.</p>
-        </header>
-
+    <div class="p-8 bg-gray-100 min-h-screen">
+        <h1 class="text-4xl font-extrabold mb-6 text-blue-700">Lerne SQL-Befehle interaktiv</h1>
+        
         <!-- Index Section -->
-        <div class="command-list-container">
-            <h2>SQL-Befehle</h2>
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Index der SQL-Befehle</h2>
             <div id="command-list" class="command-list">
                 <!-- SQL Befehle kommen hier dynamisch hin -->
             </div>
         </div>
 
-        <!-- Command Details and Task -->
-        <div id="command-details" class="command-details hidden">
-            <h3 class="command-title"></h3>
-            <p class="command-description"></p>
-            <pre class="command-example"></pre>
+        <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
+            <!-- Detailansicht des Befehls -->
+        </div>
 
-            <div class="task-container">
-                <h4>Aufgabe:</h4>
-                <p id="task-text"></p>
-                <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
-                <button class="submit-btn" onclick="checkSQLInput()">Prüfen</button>
-                <p id="feedback" class="feedback"></p>
-            </div>
+        <div id="task-container" class="task-container mt-8 p-6 bg-yellow-100 rounded-md shadow-md">
+            <h3 class="text-xl font-semibold mb-4">Aufgabe:</h3>
+            <p id="task-text" class="text-gray-800"></p>
+            <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
+            <button class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onclick="checkSQLInput()">Prüfen</button>
+            <p id="feedback" class="feedback"></p>
         </div>
     </div>
 
@@ -64,123 +56,11 @@
                 solution: /SELECT \* FROM kunden WHERE plz = '12345';/i
             },
             {
-                command: "GROUP BY",
-                description: "Gruppiert Datensätze, die gleiche Werte in bestimmten Spalten haben.",
-                example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;",
-                task: "Erstelle eine Abfrage, die die Anzahl der Kunden pro Postleitzahl gruppiert.",
-                solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz;/i
-            },
-            {
-                command: "HAVING",
-                description: "Filtriert Gruppen nach einer Aggregatfunktion.",
-                example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 10;",
-                task: "Zeige nur Postleitzahlen an, die mehr als 10 Kunden haben.",
-                solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz HAVING COUNT\(\*\) > 10;/i
-            },
-            {
-                command: "CREATE TABLE",
-                description: "Erstellt eine neue Tabelle in der Datenbank.",
-                example: "CREATE TABLE kunden (id INT, name VARCHAR(100), plz VARCHAR(5));",
-                task: "Erstelle eine Tabelle 'produzenten' mit den Spalten id, name und land.",
-                solution: /CREATE TABLE produzenten \(id INT, name VARCHAR\(100\), land VARCHAR\(50\)\);/i
-            },
-            {
-                command: "DELETE",
-                description: "Löscht Datensätze aus einer Tabelle.",
-                example: "DELETE FROM kunden WHERE plz = '12345';",
-                task: "Lösche alle Kunden mit der Postleitzahl '12345'.",
-                solution: /DELETE FROM kunden WHERE plz = '12345';/i
-            },
-            {
-                command: "LIKE",
-                description: "Verwendet Platzhalterzeichen, um Muster zu suchen.",
-                example: "SELECT * FROM kunden WHERE name LIKE 'Max%';",
-                task: "Finde alle Kunden, deren Name mit 'John' beginnt.",
-                solution: /SELECT \* FROM kunden WHERE name LIKE 'John\%';/i
-            },
-            {
-                command: "AND",
-                description: "Verwendet mehrere Bedingungen, die beide erfüllt sein müssen.",
-                example: "SELECT * FROM kunden WHERE plz = '12345' AND name = 'Max';",
-                task: "Finde alle Kunden aus der Postleitzahl '12345' mit dem Namen 'Max'.",
-                solution: /SELECT \* FROM kunden WHERE plz = '12345' AND name = 'Max';/i
-            },
-            {
-                command: "OR",
-                description: "Verwendet mehrere Bedingungen, von denen eine erfüllt sein muss.",
-                example: "SELECT * FROM kunden WHERE plz = '12345' OR plz = '67890';",
-                task: "Finde alle Kunden aus der Postleitzahl '12345' oder '67890'.",
-                solution: /SELECT \* FROM kunden WHERE plz = '12345' OR plz = '67890';/i
-            },
-            {
-                command: "IN",
-                description: "Überprüft, ob ein Wert in einer Liste von Werten vorhanden ist.",
-                example: "SELECT * FROM kunden WHERE plz IN ('12345', '67890');",
-                task: "Zeige alle Kunden, deren Postleitzahl entweder '12345' oder '67890' ist.",
-                solution: /SELECT \* FROM kunden WHERE plz IN \('12345', '67890'\);/i
-            },
-            {
                 command: "INSERT INTO",
-                description: "Fügt einen neuen Datensatz in eine Tabelle ein.",
+                description: "Fügt neue Datensätze in eine Tabelle ein.",
                 example: "INSERT INTO kunden (name, plz) VALUES ('Max Mustermann', '12345');",
                 task: "Füge einen neuen Kunden mit dem Namen 'John Doe' und der Postleitzahl '54321' in die Tabelle 'kunden' ein.",
                 solution: /INSERT INTO kunden \(name, plz\) VALUES \('John Doe', '54321'\);/i
-            },
-            {
-                command: "UPDATE SET",
-                description: "Aktualisiert bestehende Datensätze in einer Tabelle.",
-                example: "UPDATE kunden SET plz = '54321' WHERE name = 'Max Mustermann';",
-                task: "Ändere die Postleitzahl eines Kunden mit dem Namen 'John Doe' auf '98765'.",
-                solution: /UPDATE kunden SET plz = '98765' WHERE name = 'John Doe';/i
-            },
-            {
-                command: "AVG",
-                description: "Berechnet den Durchschnittswert einer Spalte.",
-                example: "SELECT AVG(altersjahr) FROM kunden;",
-                task: "Berechne das durchschnittliche Alter der Kunden.",
-                solution: /SELECT AVG\(altersjahr\) FROM kunden;/i
-            },
-            {
-                command: "MAX",
-                description: "Gibt den höchsten Wert einer Spalte zurück.",
-                example: "SELECT MAX(altersjahr) FROM kunden;",
-                task: "Zeige das maximale Alter der Kunden an.",
-                solution: /SELECT MAX\(altersjahr\) FROM kunden;/i
-            },
-            {
-                command: "MIN",
-                description: "Gibt den niedrigsten Wert einer Spalte zurück.",
-                example: "SELECT MIN(altersjahr) FROM kunden;",
-                task: "Zeige das minimale Alter der Kunden an.",
-                solution: /SELECT MIN\(altersjahr\) FROM kunden;/i
-            },
-            {
-                command: "NOW",
-                description: "Gibt das aktuelle Datum und die Uhrzeit zurück.",
-                example: "SELECT NOW();",
-                task: "Zeige das aktuelle Datum und die Uhrzeit an.",
-                solution: /SELECT NOW\(\);/i
-            },
-            {
-                command: "SUM",
-                description: "Berechnet die Summe einer numerischen Spalte.",
-                example: "SELECT SUM(umsatz) FROM kunden;",
-                task: "Berechne die Summe des Umsatzes aller Kunden.",
-                solution: /SELECT SUM\(umsatz\) FROM kunden;/i
-            },
-            {
-                command: "YEAR",
-                description: "Extrahiert das Jahr aus einem Datumswert.",
-                example: "SELECT YEAR(geburtsdatum) FROM kunden;",
-                task: "Zeige das Jahr der Geburt aller Kunden an.",
-                solution: /SELECT YEAR\(geburtsdatum\) FROM kunden;/i
-            },
-            {
-                command: "COUNT",
-                description: "Zählt die Anzahl der Datensätze.",
-                example: "SELECT COUNT(*) FROM kunden;",
-                task: "Zähle, wie viele Kunden in der Tabelle 'kunden' vorhanden sind.",
-                solution: /SELECT COUNT\(\*\) FROM kunden;/i
             }
         ];
 
@@ -191,8 +71,8 @@
             const div = document.createElement("div");
             div.classList.add("command-card");
             div.innerHTML = `
-                <h3 class="command-name">${command.command}</h3>
-                <p class="command-description-preview">${command.description}</p>
+                <h3 class="text-xl font-semibold text-indigo-700">${command.command}</h3>
+                <p class="mt-2 text-gray-600">${command.description}</p>
             `;
             div.addEventListener("click", () => showCommandDetails(command));
 
@@ -202,15 +82,19 @@
         // Zeige die Details des ausgewählten Befehls
         function showCommandDetails(command) {
             const commandDetails = document.getElementById("command-details");
+            const taskContainer = document.getElementById("task-container");
             const taskText = document.getElementById("task-text");
 
             commandDetails.classList.remove("hidden");
+            taskContainer.classList.remove("task-container");
 
-            // Zeige Details des Befehls
-            commandDetails.querySelector('.command-title').textContent = command.command;
-            commandDetails.querySelector('.command-description').textContent = command.description;
-            commandDetails.querySelector('.command-example').textContent = `Beispiel: ${command.example}`;
-            
+            commandDetails.innerHTML = `
+                <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
+                <p class="mt-4 text-gray-700">${command.description}</p>
+                <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
+                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
+            `;
+
             taskText.textContent = command.task;
             taskText.dataset.solution = command.solution;
         }
