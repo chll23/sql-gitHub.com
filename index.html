@@ -70,6 +70,55 @@
                 example: "SELECT * FROM kunden WHERE plz = '12345';",
                 task: "Finde alle Kunden mit der Postleitzahl '12345'.",
                 solution: /SELECT \* FROM kunden WHERE plz = '12345';/i
+            },
+            {
+                command: "INSERT INTO",
+                description: "Fügt neue Datensätze in eine Tabelle ein.",
+                example: "INSERT INTO kunden (name, plz) VALUES ('Max Mustermann', '12345');",
+                task: "Füge einen neuen Kunden mit dem Namen 'John Doe' und der Postleitzahl '54321' in die Tabelle 'kunden' ein.",
+                solution: /INSERT INTO kunden \(name, plz\) VALUES \('John Doe', '54321'\);/i
+            },
+            {
+                command: "UPDATE",
+                description: "Aktualisiert bestehende Datensätze.",
+                example: "UPDATE kunden SET plz = '54321' WHERE name = 'Max Mustermann';",
+                task: "Ändere die Postleitzahl des Kunden 'Max Mustermann' auf '98765'.",
+                solution: /UPDATE kunden SET plz = '98765' WHERE name = 'Max Mustermann';/i
+            },
+            {
+                command: "DELETE",
+                description: "Löscht Datensätze aus einer Tabelle.",
+                example: "DELETE FROM kunden WHERE name = 'Max Mustermann';",
+                task: "Lösche den Kunden 'Max Mustermann' aus der Tabelle 'kunden'.",
+                solution: /DELETE FROM kunden WHERE name = 'Max Mustermann';/i
+            },
+            {
+                command: "JOIN",
+                description: "Verbindet zwei oder mehr Tabellen basierend auf einer gemeinsamen Spalte.",
+                example: "SELECT kunden.name, bestellungen.bestellt_am FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;",
+                task: "Zeige alle Bestellungen von Kunden an, indem du die Tabellen 'kunden' und 'bestellungen' verbindest.",
+                solution: /SELECT kunden\.name, bestellungen\.bestellt_am FROM kunden JOIN bestellungen ON kunden\.id = bestellungen\.kunden_id;/i
+            },
+            {
+                command: "GROUP BY",
+                description: "Gruppiert Datensätze basierend auf einer bestimmten Spalte.",
+                example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;",
+                task: "Zeige die Anzahl der Kunden pro Postleitzahl.",
+                solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz;/i
+            },
+            {
+                command: "ORDER BY",
+                description: "Sortiert die Ergebnisse einer Abfrage.",
+                example: "SELECT name FROM kunden ORDER BY name DESC;",
+                task: "Zeige alle Kunden in alphabetischer Reihenfolge an.",
+                solution: /SELECT name FROM kunden ORDER BY name ASC;/i
+            },
+            {
+                command: "LIMIT",
+                description: "Begrenzt die Anzahl der zurückgegebenen Datensätze.",
+                example: "SELECT * FROM kunden LIMIT 5;",
+                task: "Zeige nur die ersten 3 Kunden an.",
+                solution: /SELECT \* FROM kunden LIMIT 3;/i
             }
         ];
 
