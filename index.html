@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lerne SQL-Befehle interaktiv</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f3f4f6;
+            font-family: Arial, sans-serif;
+        }
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            border: 2px solid #ddd;
+            padding: 8px;
+            border-radius: 8px;
+        }
+        .task-container {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="p-8 bg-gray-100 min-h-screen">
+        <h1 class="text-4xl font-extrabold mb-6 text-blue-700">Lerne SQL-Befehle interaktiv</h1>
+        
+        <!-- Index Section -->
+        <div class="mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Index der SQL-Befehle</h2>
+            <ul id="command-list" class="list-disc pl-6">
+                <!-- Hier kommen die SQL-Befehle dynamisch hin -->
+            </ul>
+        </div>
+
+        <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
+            <!-- Detailansicht des Befehls -->
+        </div>
+
+        <div id="task-container" class="task-container mt-8 p-6 bg-yellow-100 rounded-md shadow-md">
+            <h3 class="text-xl font-semibold mb-4">Aufgabe:</h3>
+            <p id="task-text" class="text-gray-800"></p>
+            <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
+            <button class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onclick="checkSQLInput()">Prüfen</button>
+            <p id="feedback" class="mt-4 text-gray-800"></p>
+        </div>
+    </div>
+
+    <script>
+        // SQL-Befehle und ihre Details
+        const sqlCommands = [
+            {
+                command: "SELECT",
+                description: "Wählt Daten aus einer Tabelle aus.",
+                example: "SELECT * FROM kunden WHERE plz = '12345';",
+                task: "Erstelle eine Abfrage, die alle Kunden mit einer Postleitzahl größer als '50000' ausgibt.",
+                solution: /SELECT \* FROM kunden WHERE plz > '50000';/i
+            },
+            {
+                command: "FROM",
+                description: "Gibt die Tabelle an, aus der Daten abgefragt werden.",
+                example: "SELECT name FROM kunden;",
+                task: "Zeige alle Kunden aus der Tabelle 'kunden'.",
+                solution: /SELECT \* FROM kunden;/i
+            },
+            {
+                command: "WHERE",
+                description: "Filtert Datensätze basierend auf einer Bedingung.",
+                example: "SELECT * FROM kunden WHERE plz = '12345';",
+                task: "Finde alle Kunden mit der Postleitzahl '12345'.",
+                solution: /SELECT \* FROM kunden WHERE plz = '12345';/i
+            }
+        ];
+
+        // Anzeige der SQL-Befehle
+        const commandList = document.getElementById("command-list");
+
+        sqlCommands.forEach(command => {
+            const li = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = `#${command.command.toLowerCase()}`;
+            link.classList.add("text-indigo-600");
+            link.textContent = command.command;
+
+            link.addEventListener("click", () => showCommandDetails(command));
+
+            li.appendChild(link);
+            commandList.appendChild(li);
+        });
+
+        // Zeige die Details des ausgewählten Befehls
+        function showCommandDetails(command) {
+            const commandDetails = document.getElementById("command-details");
+            const taskContainer = document.getElementById("task-container");
+            const taskText = document.getElementById("task-text");
+
+            commandDetails.classList.remove("hidden");
+            taskContainer.classList.remove("task-container");
+
+            commandDetails.innerHTML = `
+                <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
+                <p class="mt-4 text-gray-700">${command.description}</p>
+                <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
+                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
+            `;
+
+            taskText.textContent = command.task;
+            taskText.dataset.solution = command.solution;
+        }
+
+        // Prüfe die Eingabe des Nutzers
+        function checkSQLInput() {
+            const userQuery = document.getElementById("sql-input").value.trim();
+            const solution = document.getElementById("task-text").dataset.solution;
+            const feedback = document.getElementById("feedback");
+
+            const correctSolution = new RegExp(solution);
+
+            if (correctSolution.test(userQuery)) {
+                feedback.textContent = "Richtig! Deine SQL-Abfrage ist korrekt.";
+                feedback.style.color = "green";
+            } else {
+                feedback.textContent = "Falsch. Bitte versuche es erneut.";
+                feedback.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>

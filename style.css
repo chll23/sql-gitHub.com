@@ -1,0 +1,177 @@
+body {
+    background-color: #f3f4f6;
+    font-family: Arial, sans-serif;
+  }
+  
+  textarea {
+    width: 100%;
+    min-height: 100px;
+    border: 2px solid #ddd;
+    padding: 8px;
+    border-radius: 8px;
+  }
+  
+  .bg-yellow-100 {
+    background-color: #fefcbf;
+  }
+  
+  .bg-indigo-600 {
+    background-color: #4c51bf;
+  }
+  
+  .bg-indigo-800 {
+    background-color: #2c5282;
+  }
+  
+  .bg-yellow-500 {
+    background-color: #fbbf24;
+  }
+  
+  .text-indigo-600 {
+    color: #5a67d8;
+  }
+  
+  .text-indigo-700 {
+    color: #4c51bf;
+  }
+  
+  .text-gray-700 {
+    color: #4a5568;
+  }
+  
+  .text-gray-800 {
+    color: #2d3748;
+  }
+  
+  .text-gray-600 {
+    color: #718096;
+  }
+  
+  .text-lg {
+    font-size: 1.125rem;
+  }
+  
+  .text-2xl {
+    font-size: 1.5rem;
+  }
+  
+  .text-3xl {
+    font-size: 1.875rem;
+  }
+  
+  .text-xl {
+    font-size: 1.25rem;
+  }
+  
+  .font-extrabold {
+    font-weight: 800;
+  }
+  
+  .font-semibold {
+    font-weight: 600;
+  }
+  
+  .mt-2 {
+    margin-top: 0.5rem;
+  }
+  
+  .mt-4 {
+    margin-top: 1rem;
+  }
+  
+  .mt-6 {
+    margin-top: 1.5rem;
+  }
+  
+  .mt-8 {
+    margin-top: 2rem;
+  }
+  
+  .p-4 {
+    padding: 1rem;
+  }
+  
+  .p-6 {
+    padding: 1.5rem;
+  }
+  
+  .p-8 {
+    padding: 2rem;
+  }
+  
+  .bg-gray-100 {
+    background-color: #f7fafc;
+  }
+  
+  .bg-white {
+    background-color: #ffffff;
+  }
+  
+  .rounded-lg {
+    border-radius: 0.5rem;
+  }
+  
+  .rounded-md {
+    border-radius: 0.375rem;
+  }
+  
+  .rounded-xl {
+    border-radius: 0.75rem;
+  }
+  
+  .shadow-md {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .shadow-2xl {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+  }
+  
+  .list-disc {
+    list-style-type: disc;
+  }
+  
+  .pl-6 {
+    padding-left: 1.5rem;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .transition-all {
+    transition: all 0.3s;
+  }
+  
+  .hover\:transform:hover {
+    transform: translateY(-0.25rem);
+  }
+  
+  .hover\:shadow-lg:hover {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .hover\:bg-indigo-800:hover {
+    background-color: #2c5282;
+  }
+  
+  .hover\:bg-yellow-600:hover {
+    background-color: #d97706;
+  }
+  
+  .text-white {
+    color: white;
+  }
+  
+  .text-indigo-700 {
+    color: #2c5282;
+  }
+  
+  .text-gray-800 {
+    color: #2d3748;
+  }
+  
