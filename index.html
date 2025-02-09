@@ -35,38 +35,38 @@
             { command: "INSERT INTO", description: "Fügt neue Datensätze in eine Tabelle ein.", example: "INSERT INTO kunden (name, plz) VALUES ('Max', '12345');", task: "Füge einen neuen Kunden hinzu.", solution: "INSERT INTO kunden (name, plz) VALUES ('Max', '12345');" },
             { command: "UPDATE SET", description: "Aktualisiert vorhandene Daten in einer Tabelle.", example: "UPDATE kunden SET name = 'Max' WHERE id = 1;", task: "Ändere den Namen des Kunden mit ID 1.", solution: "UPDATE kunden SET name = 'Max' WHERE id = 1;" },
             { command: "AVG", description: "Berechnet den Durchschnitt einer Spalte.", example: "SELECT AVG(preis) FROM produkte;", task: "Berechne den Durchschnittspreis der Produkte.", solution: "SELECT AVG(preis) FROM produkte;" },
-            { command: "MAX", description: "Findet den größten Wert einer Spalte.", example: "SELECT MAX(preis) FROM produkte;", task: "Finde den teuersten Artikel.", solution: "SELECT MAX(preis) FROM produkte;" },
-            { command: "MIN", description: "Findet den kleinsten Wert einer Spalte.", example: "SELECT MIN(preis) FROM produkte;", task: "Finde den günstigsten Artikel.", solution: "SELECT MIN(preis) FROM produkte;" },
-            { command: "NOW", description: "Gibt die aktuelle Uhrzeit zurück.", example: "SELECT NOW();", task: "Gib das aktuelle Datum und die Uhrzeit zurück.", solution: "SELECT NOW();" },
-            { command: "SUM", description: "Berechnet die Summe einer Spalte.", example: "SELECT SUM(preis) FROM produkte;", task: "Berechne die Gesamtsumme der Produktpreise.", solution: "SELECT SUM(preis) FROM produkte;" },
-            { command: "YEAR", description: "Extrahiert das Jahr aus einem Datum.", example: "SELECT YEAR(geburtsdatum) FROM kunden;", task: "Zeige das Geburtsjahr aller Kunden.", solution: "SELECT YEAR(geburtsdatum) FROM kunden;" },
-            { command: "COUNT", description: "Zählt die Anzahl der Datensätze.", example: "SELECT COUNT(*) FROM kunden;", task: "Zähle alle Kunden.", solution: "SELECT COUNT(*) FROM kunden;" },
-            { command: "JOIN", description: "Verknüpft zwei Tabellen.", example: "SELECT * FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;", task: "Zeige alle Kunden und ihre Bestellungen.", solution: "SELECT * FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;" }
+            { command: "MAX", description: "Findet den höchsten Wert einer Spalte.", example: "SELECT MAX(preis) FROM produkte;", task: "Finde den teuersten Artikel.", solution: "SELECT MAX(preis) FROM produkte;" },
+            { command: "MIN", description: "Findet den niedrigsten Wert einer Spalte.", example: "SELECT MIN(preis) FROM produkte;", task: "Finde das günstigste Produkt.", solution: "SELECT MIN(preis) FROM produkte;" },
+            { command: "NOW", description: "Gibt das aktuelle Datum und die aktuelle Uhrzeit zurück.", example: "SELECT NOW();", task: "Zeige das aktuelle Datum und die Uhrzeit.", solution: "SELECT NOW();" },
+            { command: "SUM", description: "Berechnet die Summe einer Spalte.", example: "SELECT SUM(preis) FROM produkte;", task: "Berechne die Gesamtkosten der Produkte.", solution: "SELECT SUM(preis) FROM produkte;" },
+            { command: "YEAR", description: "Extrahiert das Jahr aus einem Datum.", example: "SELECT YEAR(datum) FROM bestellungen;", task: "Zeige das Jahr der Bestellung.", solution: "SELECT YEAR(datum) FROM bestellungen;" },
+            { command: "COUNT", description: "Zählt die Anzahl der Datensätze.", example: "SELECT COUNT(*) FROM kunden;", task: "Zähle die Anzahl der Kunden.", solution: "SELECT COUNT(*) FROM kunden;" },
+            { command: "JOIN", description: "Verknüpft Tabellen basierend auf einer gemeinsamen Spalte.", example: "SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;", task: "Zeige die Namen der Kunden und ihre Bestellbeträge.", solution: "SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;" }
         ];
 
+        // Befehle dynamisch in die HTML-Seite einfügen
         const commandList = document.getElementById("command-list");
-
         sqlCommands.forEach(command => {
-            const div = document.createElement("div");
-            div.classList.add("command-card");
-            div.innerHTML = `<h3>${command.command}</h3><p>${command.description}</p>`;
-            div.addEventListener("click", () => showCommandDetails(command));
-            commandList.appendChild(div);
+            const commandCard = document.createElement("div");
+            commandCard.classList.add("command-card");
+            commandCard.innerHTML = `
+                <h3>${command.command}</h3>
+                <p><strong>Beschreibung:</strong> ${command.description}</p>
+                <p><strong>Beispiel:</strong></p>
+                <div class="sql-block"><pre>${command.example}</pre></div>
+                <p><strong>Aufgabe:</strong> ${command.task}</p>
+                <button class="cursor-pointer mt-4 text-indigo-600 hover:text-indigo-800" onclick="showSolution('${command.solution}')">Zeige Lösung</button>
+            `;
+            commandList.appendChild(commandCard);
         });
 
-        function showCommandDetails(command) {
-            const commandDetails = document.getElementById("command-details");
-            commandDetails.classList.remove("hidden");
-            commandDetails.innerHTML = `
-                <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
-                <p class="mt-4 text-gray-700">${command.description}</p>
-                <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
-                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
-                <h3 class="text-xl font-semibold mt-6">Aufgabe:</h3>
-                <p class="text-gray-700">${command.task}</p>
-                <h3 class="text-xl font-semibold mt-6">Lösung:</h3>
-                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.solution}</pre>
+        function showSolution(solution) {
+            const details = document.getElementById("command-details");
+            details.innerHTML = `
+                <h3 class="text-3xl font-semibold text-indigo-600">Lösung:</h3>
+                <div class="sql-block"><pre>${solution}</pre></div>
             `;
+            details.classList.remove("hidden");
         }
     </script>
 </body>
