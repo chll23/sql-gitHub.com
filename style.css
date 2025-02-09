@@ -6,31 +6,37 @@ body {
 .command-card {
     background-color: #ffffff;
     padding: 20px;
-    margin: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sanfter Schatten für 3D-Effekt */
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #e2e8f0; /* Weiße Grenze für den Block */
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Sanfte Übergänge */
+    border: 1px solid #e2e8f0;
+    position: relative; /* Für den 3D-Effekt */
 }
 
 .command-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-10px) scale(1.05); /* Bewegt den Block nach oben für den 3D-Effekt */
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2); /* Stärkerer Schatten beim Hover */
+}
+
+.command-card:active {
+    transform: translateY(4px) scale(1); /* Wenn der Block angeklickt wird */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .command-card h3 {
     font-size: 1.5rem;
     color: #333;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .command-card p {
     font-size: 1rem;
     color: #555;
-}
-
-.command-card:hover h3 {
-    color: #1f2937;
+    line-height: 1.6;
 }
 
 textarea {
