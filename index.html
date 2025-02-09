@@ -3,31 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lerne SQL-Befehle interaktiv</title>
+    <title>SQL Lernhilfe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
 <body>
-    <div class="p-8 bg-gray-100 min-h-screen">
-        <h1 class="text-4xl font-extrabold mb-6 text-blue-700">Lerne SQL-Befehle interaktiv</h1>
-        
+    <div class="container">
+        <header>
+            <h1>Interaktive SQL Lernhilfe</h1>
+            <p class="description">Lerne SQL mit interaktiven Beispielen und Übungen.</p>
+        </header>
+
         <!-- Index Section -->
-        <div class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4">Index der SQL-Befehle</h2>
+        <div class="command-list-container">
+            <h2>SQL-Befehle</h2>
             <div id="command-list" class="command-list">
                 <!-- SQL Befehle kommen hier dynamisch hin -->
             </div>
         </div>
 
-        <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
-            <!-- Detailansicht des Befehls -->
-        </div>
+        <!-- Command Details and Task -->
+        <div id="command-details" class="command-details hidden">
+            <h3 class="command-title"></h3>
+            <p class="command-description"></p>
+            <pre class="command-example"></pre>
 
-        <div id="task-container" class="task-container mt-8 p-6 bg-yellow-100 rounded-md shadow-md">
-            <h3 class="text-xl font-semibold mb-4">Aufgabe:</h3>
-            <p id="task-text" class="text-gray-800"></p>
-            <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
-            <button class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onclick="checkSQLInput()">Prüfen</button>
-            <p id="feedback" class="feedback"></p>
+            <div class="task-container">
+                <h4>Aufgabe:</h4>
+                <p id="task-text"></p>
+                <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
+                <button class="submit-btn" onclick="checkSQLInput()">Prüfen</button>
+                <p id="feedback" class="feedback"></p>
+            </div>
         </div>
     </div>
 
@@ -183,8 +190,8 @@
             const div = document.createElement("div");
             div.classList.add("command-card");
             div.innerHTML = `
-                <h3 class="text-xl font-semibold text-indigo-700">${command.command}</h3>
-                <p class="mt-2 text-gray-600">${command.description}</p>
+                <h3 class="command-name">${command.command}</h3>
+                <p class="command-description-preview">${command.description}</p>
             `;
             div.addEventListener("click", () => showCommandDetails(command));
 
@@ -194,20 +201,15 @@
         // Zeige die Details des ausgewählten Befehls
         function showCommandDetails(command) {
             const commandDetails = document.getElementById("command-details");
-            const taskContainer = document.getElementById("task-container");
             const taskText = document.getElementById("task-text");
 
-            // Stelle sicher, dass die vorherige Detailansicht und Aufgabe ausgeblendet sind
             commandDetails.classList.remove("hidden");
-            taskContainer.classList.remove("task-container");
 
-            commandDetails.innerHTML = `
-                <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
-                <p class="mt-4 text-gray-700">${command.description}</p>
-                <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
-                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
-            `;
-
+            // Zeige Details des Befehls
+            commandDetails.querySelector('.command-title').textContent = command.command;
+            commandDetails.querySelector('.command-description').textContent = command.description;
+            commandDetails.querySelector('.command-example').textContent = `Beispiel: ${command.example}`;
+            
             taskText.textContent = command.task;
             taskText.dataset.solution = command.solution;
         }
