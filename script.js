@@ -22,154 +22,121 @@ const sqlCommands = [
     },
     {
         command: "GROUP BY",
-        description: "Gruppiert Datensätze, die dieselben Werte in einer oder mehreren Spalten haben.",
-        example: "SELECT COUNT(*), plz FROM kunden GROUP BY plz;",
-        task: "Zähle, wie viele Kunden es in jeder Postleitzahl gibt.",
-        solution: /SELECT COUNT\(\*\), plz FROM kunden GROUP BY plz;/i
+        description: "Fasst Datensätze basierend auf einer oder mehreren Spalten zusammen.",
+        example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;",
+        task: "Zähle, wie viele Kunden es pro Postleitzahl gibt.",
+        solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz;/i
     },
     {
         command: "HAVING",
-        description: "Filtert Gruppen nach einer Bedingung, ähnlich wie WHERE für Gruppen.",
-        example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 5;",
-        task: "Zeige alle Postleitzahlen mit mehr als 5 Kunden.",
-        solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz HAVING COUNT\(\*\) > 5;/i
+        description: "Filtern von Gruppen, die durch GROUP BY erstellt wurden.",
+        example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 10;",
+        task: "Zeige nur Postleitzahlen, bei denen mehr als 10 Kunden existieren.",
+        solution: /SELECT plz, COUNT\(\*\) FROM kunden GROUP BY plz HAVING COUNT\(\*\) > 10;/i
     },
     {
         command: "CREATE TABLE",
         description: "Erstellt eine neue Tabelle in der Datenbank.",
-        example: "CREATE TABLE kunden (id INT, name VARCHAR(100));",
-        task: "Erstelle eine Tabelle für 'bestellungen' mit den Spalten 'bestell_id', 'kunde_id' und 'betrag'.",
-        solution: /CREATE TABLE bestellungen \(bestell_id INT, kunde_id INT, betrag DECIMAL\)/i
+        example: "CREATE TABLE kunden (id INT, name VARCHAR(100), plz VARCHAR(10));",
+        task: "Erstelle eine Tabelle namens 'bestellungen' mit den Spalten 'id', 'kunde_id', und 'betrag'.",
+        solution: /CREATE TABLE bestellungen \(id INT, kunde_id INT, betrag DECIMAL\(10, 2\)\);/i
     },
     {
         command: "DELETE",
-        description: "Löscht Datensätze aus einer Tabelle.",
+        description: "Löscht Daten aus einer Tabelle.",
         example: "DELETE FROM kunden WHERE plz = '12345';",
-        task: "Lösche alle Kunden mit der Postleitzahl '12345'.",
+        task: "Lösche alle Kunden aus der Tabelle 'kunden', die eine Postleitzahl von '12345' haben.",
         solution: /DELETE FROM kunden WHERE plz = '12345';/i
     },
     {
         command: "LIKE",
-        description: "Sucht nach einem Muster in einer Spalte.",
-        example: "SELECT * FROM kunden WHERE name LIKE 'J%';",
-        task: "Zeige alle Kunden, deren Namen mit 'J' beginnen.",
-        solution: /SELECT \* FROM kunden WHERE name LIKE 'J%';/i
+        description: "Verwendet Platzhalter, um Datensätze zu suchen, die ein Muster enthalten.",
+        example: "SELECT * FROM kunden WHERE name LIKE 'A%';",
+        task: "Zeige alle Kunden, deren Namen mit 'M' beginnen.",
+        solution: /SELECT \* FROM kunden WHERE name LIKE 'M%';/i
     },
     {
-        command: "AND/OR/IN",
-        description: "Verbindet mehrere Bedingungen.",
-        example: "SELECT * FROM kunden WHERE plz = '12345' AND name = 'John';",
-        task: "Zeige alle Kunden mit der Postleitzahl '12345' und dem Namen 'John'.",
-        solution: /SELECT \* FROM kunden WHERE plz = '12345' AND name = 'John';/i
+        command: "AND / OR",
+        description: "Verwendet logische Operatoren, um mehrere Bedingungen zu kombinieren.",
+        example: "SELECT * FROM kunden WHERE plz = '12345' AND name LIKE 'M%';",
+        task: "Zeige alle Kunden aus der Postleitzahl '12345', deren Namen mit 'A' beginnen.",
+        solution: /SELECT \* FROM kunden WHERE plz = '12345' AND name LIKE 'A%';/i
+    },
+    {
+        command: "IN",
+        description: "Prüft, ob ein Wert in einer Liste von Werten enthalten ist.",
+        example: "SELECT * FROM kunden WHERE plz IN ('12345', '67890');",
+        task: "Zeige alle Kunden, deren Postleitzahl '12345' oder '67890' ist.",
+        solution: /SELECT \* FROM kunden WHERE plz IN \('12345', '67890'\);/i
     },
     {
         command: "INSERT INTO",
         description: "Fügt neue Datensätze in eine Tabelle ein.",
-        example: "INSERT INTO kunden (id, name, plz) VALUES (1, 'John Doe', '12345');",
-        task: "Füge einen neuen Kunden mit ID 1, dem Namen 'Jane Doe' und der Postleitzahl '54321' hinzu.",
-        solution: /INSERT INTO kunden \(id, name, plz\) VALUES \(1, 'Jane Doe', '54321'\);/i
+        example: "INSERT INTO kunden (id, name, plz) VALUES (1, 'Max Mustermann', '12345');",
+        task: "Füge einen neuen Kunden mit den folgenden Daten ein: id=3, name='Anna Müller', plz='98765'.",
+        solution: /INSERT INTO kunden \(id, name, plz\) VALUES \(3, 'Anna Müller', '98765'\);/i
     },
     {
         command: "UPDATE SET",
-        description: "Aktualisiert bestehende Datensätze.",
-        example: "UPDATE kunden SET name = 'John Smith' WHERE id = 1;",
-        task: "Ändere den Namen des Kunden mit ID 1 in 'John Smith'.",
-        solution: /UPDATE kunden SET name = 'John Smith' WHERE id = 1;/i
+        description: "Aktualisiert Daten in einer Tabelle.",
+        example: "UPDATE kunden SET plz = '54321' WHERE id = 1;",
+        task: "Ändere die Postleitzahl des Kunden mit der ID 2 auf '67890'.",
+        solution: /UPDATE kunden SET plz = '67890' WHERE id = 2;/i
     },
     {
         command: "AVG",
-        description: "Berechnet den Durchschnitt von Werten.",
+        description: "Berechnet den Durchschnittswert einer Spalte.",
         example: "SELECT AVG(betrag) FROM bestellungen;",
-        task: "Berechne den Durchschnitt des Betrags aller Bestellungen.",
+        task: "Berechne den durchschnittlichen Bestellbetrag in der Tabelle 'bestellungen'.",
         solution: /SELECT AVG\(betrag\) FROM bestellungen;/i
     },
     {
-        command: "MAX/MIN",
-        description: "Gibt den höchsten/niedrigsten Wert in einer Spalte zurück.",
+        command: "MAX",
+        description: "Gibt den größten Wert einer Spalte zurück.",
         example: "SELECT MAX(betrag) FROM bestellungen;",
-        task: "Finde den höchsten Bestellbetrag.",
+        task: "Finde den höchsten Bestellbetrag in der Tabelle 'bestellungen'.",
         solution: /SELECT MAX\(betrag\) FROM bestellungen;/i
     },
     {
+        command: "MIN",
+        description: "Gibt den kleinsten Wert einer Spalte zurück.",
+        example: "SELECT MIN(betrag) FROM bestellungen;",
+        task: "Finde den niedrigsten Bestellbetrag in der Tabelle 'bestellungen'.",
+        solution: /SELECT MIN\(betrag\) FROM bestellungen;/i
+    },
+    {
         command: "NOW",
-        description: "Gibt das aktuelle Datum und die Uhrzeit zurück.",
+        description: "Gibt das aktuelle Datum und die aktuelle Uhrzeit zurück.",
         example: "SELECT NOW();",
-        task: "Zeige das aktuelle Datum und die Uhrzeit.",
+        task: "Zeige das aktuelle Datum und die Uhrzeit an.",
         solution: /SELECT NOW\(\);/i
     },
     {
         command: "SUM",
         description: "Berechnet die Summe der Werte in einer Spalte.",
         example: "SELECT SUM(betrag) FROM bestellungen;",
-        task: "Berechne die Summe des Betrags aller Bestellungen.",
+        task: "Berechne den Gesamtbetrag aller Bestellungen in der Tabelle 'bestellungen'.",
         solution: /SELECT SUM\(betrag\) FROM bestellungen;/i
     },
     {
         command: "YEAR",
-        description: "Extrahiert das Jahr aus einem Datum.",
-        example: "SELECT YEAR(bestelldatum) FROM bestellungen;",
-        task: "Zeige das Jahr des Bestelldatums für alle Bestellungen.",
-        solution: /SELECT YEAR\(bestelldatum\) FROM bestellungen;/i
+        description: "Extrahiert das Jahr aus einem Datumswert.",
+        example: "SELECT YEAR(geburtsdatum) FROM kunden;",
+        task: "Zeige das Geburtsjahr jedes Kunden aus der Tabelle 'kunden'.",
+        solution: /SELECT YEAR\(geburtsdatum\) FROM kunden;/i
     },
     {
         command: "COUNT",
-        description: "Zählt die Anzahl der Datensätze.",
+        description: "Zählt die Anzahl der Datensätze in einer Tabelle.",
         example: "SELECT COUNT(*) FROM kunden;",
-        task: "Zähle alle Kunden in der Tabelle.",
+        task: "Zähle, wie viele Kunden es in der Tabelle 'kunden' gibt.",
         solution: /SELECT COUNT\(\*\) FROM kunden;/i
+    },
+    {
+        command: "JOIN",
+        description: "Verbindet zwei oder mehr Tabellen basierend auf einer gemeinsamen Spalte.",
+        example: "SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunde_id;",
+        task: "Verbinde die Tabellen 'kunden' und 'bestellungen', um die Namen der Kunden und deren Bestellbeträge zu erhalten.",
+        solution: /SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunde_id;/i
     }
 ];
-
-
-// Anzeige der SQL-Befehle
-const commandList = document.getElementById("command-list");
-
-sqlCommands.forEach(command => {
-    const li = document.createElement("li");
-    const link = document.createElement("a");
-    link.href = `#${command.command.toLowerCase()}`;
-    link.classList.add("text-indigo-600", "cursor-pointer");
-    link.textContent = command.command;
-
-    link.addEventListener("click", () => showCommandDetails(command));
-
-    li.appendChild(link);
-    commandList.appendChild(li);
-});
-
-// Zeige die Details des ausgewählten Befehls
-function showCommandDetails(command) {
-    const commandDetails = document.getElementById("command-details");
-    const taskContainer = document.getElementById("task-container");
-    const taskText = document.getElementById("task-text");
-
-    commandDetails.classList.remove("hidden");
-    taskContainer.classList.remove("task-container");
-
-    commandDetails.innerHTML = `
-        <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
-        <p class="mt-4 text-gray-700">${command.description}</p>
-        <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
-        <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
-    `;
-
-    taskText.textContent = command.task;
-    taskText.dataset.solution = command.solution;
-}
-
-// Prüfe die Eingabe des Nutzers
-function checkSQLInput() {
-    const userQuery = document.getElementById("sql-input").value.trim();
-    const solution = document.getElementById("task-text").dataset.solution;
-    const feedback = document.getElementById("feedback");
-
-    const correctSolution = new RegExp(solution);
-
-    if (correctSolution.test(userQuery)) {
-        feedback.textContent = "Richtig! Deine SQL-Abfrage ist korrekt.";
-        feedback.style.color = "green";
-    } else {
-        feedback.textContent = "Falsch. Bitte versuche es erneut.";
-        feedback.style.color = "red";
-    }
-}
