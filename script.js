@@ -1,4 +1,3 @@
-// SQL-Befehle und ihre Details
 const sqlCommands = [
     {
         command: "SELECT",
@@ -23,7 +22,6 @@ const sqlCommands = [
     }
 ];
 
-// Anzeige der SQL-Befehle
 const commandList = document.getElementById("command-list");
 
 sqlCommands.forEach(command => {
@@ -39,7 +37,6 @@ sqlCommands.forEach(command => {
     commandList.appendChild(li);
 });
 
-// Zeige die Details des ausgewählten Befehls
 function showCommandDetails(command) {
     const commandDetails = document.getElementById("command-details");
     const taskContainer = document.getElementById("task-container");
@@ -59,7 +56,6 @@ function showCommandDetails(command) {
     taskText.dataset.solution = command.solution;
 }
 
-// Prüfe die Eingabe des Nutzers
 function checkSQLInput() {
     const userQuery = document.getElementById("sql-input").value.trim();
     const solution = document.getElementById("task-text").dataset.solution;
