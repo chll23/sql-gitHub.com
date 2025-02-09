@@ -139,4 +139,51 @@ const sqlCommands = [
         task: "Verbinde die Tabellen 'kunden' und 'bestellungen', um die Namen der Kunden und deren Bestellbeträge zu erhalten.",
         solution: /SELECT kunden.name, bestellungen.betrag FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunde_id;/i
     }
-];
+]
+const commandList = document.getElementById("command-list");
+
+sqlCommands.forEach(command => {
+    const div = document.createElement("div");
+    div.classList.add("command-card");
+    div.innerHTML = `
+        <h3 class="font-semibold text-lg">${command.command}</h3>
+        <p class="text-sm text-gray-600">${command.description}</p>
+    `;
+    div.addEventListener("click", () => showCommandDetails(command));
+    commandList.appendChild(div);
+});
+
+function showCommandDetails(command) {
+    const commandDetails = document.getElementById("command-details");
+    const taskContainer = document.getElementById("task-container");
+    const taskText = document.getElementById("task-text");
+
+    commandDetails.classList.remove("hidden");
+    taskContainer.classList.remove("hidden");
+
+    commandDetails.innerHTML = `
+        <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
+        <p class="mt-4 text-gray-700">${command.description}</p>
+        <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
+        <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
+    `;
+
+    taskText.textContent = command.task;
+    taskText.dataset.solution = command.solution;
+}
+
+function checkSQLInput() {
+    const userQuery = document.getElementById("sql-input").value.trim();
+    const solution = document.getElementById("task-text").dataset.solution;
+    const feedback = document.getElementById("feedback");
+
+    const correctSolution = new RegExp(solution);
+
+    if (correctSolution.test(userQuery)) {
+        feedback.textContent = "Richtig! Deine SQL-Abfrage ist korrekt.";
+        feedback.style.color = "green";
+    } else {
+        feedback.textContent = "Falsch. Bitte versuche es erneut.";
+        feedback.style.color = "red";
+    }
+}
