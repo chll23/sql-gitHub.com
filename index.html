@@ -1,27 +1,216 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interaktive SQL-Befehle</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Interaktive SQL-Befehle</title>
+  <style>
+    /* Allgemeine Stile */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7fafc;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      padding: 2rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      color: #4c51bf;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      color: #555;
+      font-size: 1.1rem;
+    }
+    /* Befehlsliste */
+    .command-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .command-card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+    }
+    .command-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    }
+    .command-card h3 {
+      font-size: 1.25rem;
+      color: #4c51bf;
+      margin-bottom: 0.8rem;
+    }
+    .command-card p {
+      font-size: 1rem;
+      color: #555;
+    }
+    .command-card button {
+      background: #4c51bf;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.3s ease;
+    }
+    .command-card button:hover {
+      background: #2c3e91;
+    }
+    /* Detailansicht */
+    .command-details {
+      margin-top: 2rem;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      display: none;
+    }
+    .command-details h2 {
+      font-size: 2rem;
+      color: #4c51bf;
+    }
+    .command-details p {
+      font-size: 1.1rem;
+      color: #555;
+    }
+    .command-details pre {
+      background: #f4f7fb;
+      padding: 1rem;
+      border-radius: 5px;
+      color: #2d3748;
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    .command-details textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .command-details button {
+      background: #4c51bf;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.3s ease;
+    }
+    .command-details button:hover {
+      background: #2c3e91;
+    }
+    .command-details #feedback {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Lerne SQL-Befehle interaktiv</h1>
-            <p>Interaktive Übung für SQL-Kommandos, damit du deine Abfragen verbessern kannst.</p>
-        </header>
-        
-        <div id="command-list" class="command-list">
-            <!-- Dynamisch generierte SQL-Befehle -->
-        </div>
-
-        <div id="command-details" class="command-details">
-            <!-- Detailansicht des Befehls -->
-        </div>
+  <div class="container">
+    <header>
+      <h1>Interaktive SQL-Befehle</h1>
+      <p>Teste dein SQL-Wissen mit interaktiven Befehlen!</p>
+    </header>
+    <div id="command-list" class="command-list">
+      <!-- SQL-Befehle werden hier dynamisch eingefügt -->
     </div>
+    <div id="command-details" class="command-details">
+      <!-- Detailansicht eines Befehls -->
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script>
+    // Array mit SQL-Befehlen
+    const sqlCommands = [
+      {
+        command: "SELECT",
+        description: "Wählt Daten aus einer Tabelle aus.",
+        example: "SELECT * FROM kunden WHERE plz = '12345';",
+        task: "Finde alle Kunden mit der Postleitzahl '12345'.",
+        solution: "SELECT * FROM kunden WHERE plz = '12345';"
+      },
+      {
+        command: "FROM",
+        description: "Gibt die Tabelle an, aus der Daten abgefragt werden.",
+        example: "SELECT name FROM kunden;",
+        task: "Zeige alle Kunden aus der Tabelle 'kunden'.",
+        solution: "SELECT * FROM kunden;"
+      }
+      // Hier können weitere SQL-Befehle ergänzt werden...
+    ];
+
+    // Befehlsliste dynamisch erzeugen
+    const commandList = document.getElementById('command-list');
+    const commandDetails = document.getElementById('command-details');
+
+    sqlCommands.forEach(cmd => {
+      const card = document.createElement('div');
+      card.classList.add('command-card');
+      card.innerHTML = `
+        <h3>${cmd.command}</h3>
+        <p>${cmd.description}</p>
+        <button onclick="displayDetails('${cmd.command}')">Details anzeigen</button>
+      `;
+      commandList.appendChild(card);
+    });
+
+    // Detailansicht anzeigen
+    function displayDetails(commandName) {
+      const cmd = sqlCommands.find(item => item.command === commandName);
+      if (!cmd) return;
+      commandDetails.innerHTML = `
+        <h2>${cmd.command}</h2>
+        <p><strong>Beschreibung:</strong> ${cmd.description}</p>
+        <h3>Beispiel:</h3>
+        <pre>${cmd.example}</pre>
+        <h3>Aufgabe:</h3>
+        <p>${cmd.task}</p>
+        <textarea id="sql-input" placeholder="Schreibe hier deinen SQL-Befehl"></textarea>
+        <button onclick="checkSolution('${encodeURIComponent(cmd.solution)}')">Lösung prüfen</button>
+        <p id="feedback"></p>
+      `;
+      commandDetails.style.display = 'block';
+    }
+
+    // SQL-Lösung überprüfen
+    function checkSolution(encodedSolution) {
+      const expectedSolution = decodeURIComponent(encodedSolution);
+      const userInput = document.getElementById('sql-input').value.trim();
+      const feedback = document.getElementById('feedback');
+      
+      if (userInput === expectedSolution) {
+        feedback.textContent = 'Richtig! Deine SQL-Abfrage ist korrekt.';
+        feedback.style.color = 'green';
+      } else {
+        feedback.textContent = 'Falsch. Bitte versuche es erneut.';
+        feedback.style.color = 'red';
+      }
+    }
+  </script>
 </body>
 </html>
