@@ -3,6 +3,34 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+.command-card {
+    background-color: #fff;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.command-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.command-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.command-card p {
+    font-size: 1rem;
+    color: #555;
+}
+
+.command-card:hover h3 {
+    color: #1f2937;
+}
 
 textarea {
     width: 100%;
@@ -64,6 +92,10 @@ textarea {
     font-weight: 600;
 }
 
+.mt-2 {
+    margin-top: 0.5rem;
+}
+
 .mt-4 {
     margin-top: 1rem;
 }
@@ -112,16 +144,12 @@ textarea {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.shadow-lg {
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
 .shadow-2xl {
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
-}
-
-.list-disc {
-    list-style-type: disc;
-}
-
-.pl-6 {
-    padding-left: 1.5rem;
 }
 
 .cursor-pointer {
@@ -131,64 +159,3 @@ textarea {
 .transition-all {
     transition: all 0.3s;
 }
-
-.hover\:transform:hover {
-    transform: translateY(-0.25rem);
-}
-
-.hover\:shadow-lg:hover {
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-}
-
-.hover\:bg-indigo-800:hover {
-    background-color: #2c5282;
-}
-
-.hover\:bg-yellow-600:hover {
-    background-color: #d97706;
-}
-
-.text-white {
-    color: white;
-}
-
-.text-indigo-700 {
-    color: #2c5282;
-}
-
-.text-gray-800 {
-    color: #2d3748;
-}
-
-.bg-gradient-to-r {
-    background: linear-gradient(to right, #80e0a7, #6fa3f7);
-} 
-.command-card {
-    background-color: #fff;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.command-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.command-card h3 {
-    font-size: 1.5rem;
-    color: #333;
-}
-
-.command-card p {
-    font-size: 1rem;
-    color: #555;
-}
-
-.command-card:hover h3 {
-    color: #1f2937;
-}
-
