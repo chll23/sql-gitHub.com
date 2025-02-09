@@ -3,35 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SQL Interaktive Lernhilfe</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css"> <!-- Dein Style-Link -->
+    <title>Interaktive SQL-Befehle</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="p-8 bg-gray-100 min-h-screen">
         <h1 class="text-4xl font-extrabold mb-6 text-blue-700">Lerne SQL-Befehle interaktiv</h1>
         
-        <!-- Index Section -->
-        <div class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4">SQL-Befehle</h2>
-            <div id="command-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <!-- SQL Befehle werden hier dynamisch geladen -->
-            </div>
+        <div id="command-list" class="grid grid-cols-3 gap-4">
+            <!-- Dynamisch generierte SQL-Befehle werden hier angezeigt -->
         </div>
 
         <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
-            <!-- Details des ausgewählten SQL-Befehls -->
-        </div>
-
-        <div id="task-container" class="hidden mt-8 p-6 bg-yellow-100 rounded-md shadow-md">
-            <h3 class="text-xl font-semibold mb-4">Aufgabe:</h3>
-            <p id="task-text" class="text-gray-800"></p>
-            <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
-            <button class="mt-4 bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600" onclick="checkSQLInput()">Prüfen</button>
-            <p id="feedback" class="mt-4 text-gray-800"></p>
+            <!-- Detailansicht des Befehls -->
         </div>
     </div>
 
-    <script src="script.js"></script> <!-- Dein JavaScript-Link -->
+    <script>
+        const sqlCommands = [
+            { command: "SELECT", description: "Wählt Daten aus einer Tabelle.", example: "SELECT * FROM kunden;", task: "Finde alle Kunden.", solution: "SELECT * FROM kunden;" },
+            { command: "FROM", description: "Gibt an, aus welcher Tabelle Daten abgefragt werden.", example: "SELECT name FROM kunden;", task: "Zeige alle Namen der Kunden.", solution: "SELECT name FROM kunden;" },
+            { command: "WHERE", description: "Filtert Datensätze anhand einer Bedingung.", example: "SELECT * FROM kunden WHERE plz = '12345';", task: "Finde alle Kunden mit der Postleitzahl '12345'.", solution: "SELECT * FROM kunden WHERE plz = '12345';" },
+            { command: "GROUP BY", description: "Gruppiert die Datensätze anhand eines Kriteriums.", example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;", task: "Zeige die Anzahl der Kunden pro Postleitzahl.", solution: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz;" },
+            { command: "HAVING", description: "Setzt eine Bedingung auf die Gruppierung.", example: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 5;", task: "Zeige Postleitzahlen mit mehr als 5 Kunden.", solution: "SELECT plz, COUNT(*) FROM kunden GROUP BY plz HAVING COUNT(*) > 5;" },
+            { command: "CREATE TABLE", description: "Erstellt eine neue Tabelle.", example: "CREATE TABLE kunden (id INT, name VARCHAR(100));", task: "Erstelle eine Tabelle für Produkte.", solution: "CREATE TABLE produkte (id INT, name VARCHAR(100));" },
+            { command: "DELETE", description: "Löscht Datensätze.", example: "DELETE FROM kunden WHERE id = 1;", task: "Lösche den Kunden mit der ID 1.", solution: "DELETE FROM kunden WHERE id = 1;" },
+            { command: "LIKE", description: "Verwendet Wildcards für die Mustererkennung.", example: "SELECT * FROM kunden WHERE name LIKE 'A%';", task: "Finde alle Kunden, deren Name mit 'A' beginnt.", solution: "SELECT * FROM kunden WHERE name LIKE 'A%';" },
+            { command: "AND", description: "Verknüpft zwei Bedingungen.", example: "SELECT * FROM kunden WHERE plz = '12345' AND name LIKE 'A%';", task: "Finde alle Kunden mit der Postleitzahl '12345' und deren Namen mit 'A' beginnen.", solution: "SELECT * FROM kunden WHERE plz = '12345' AND name LIKE 'A%';" },
+            { command: "OR", description: "Verknüpft zwei Bedingungen mit einer Alternativbedingung.", example: "SELECT * FROM kunden WHERE plz = '12345' OR plz = '54321';", task: "Finde Kunden mit der Postleitzahl '12345' oder '54321'.", solution: "SELECT * FROM kunden WHERE plz = '12345' OR plz = '54321';" },
+            { command: "IN", description: "Prüft, ob ein Wert in einer Liste enthalten ist.", example: "SELECT * FROM kunden WHERE plz IN ('12345', '54321');", task: "Finde Kunden mit der Postleitzahl '12345' oder '54321'.", solution: "SELECT * FROM kunden WHERE plz IN ('12345', '54321');" },
+            { command: "INSERT INTO", description: "Fügt neue Datensätze in eine Tabelle ein.", example: "INSERT INTO kunden (name, plz) VALUES ('Max', '12345');", task: "Füge einen neuen Kunden hinzu.", solution: "INSERT INTO kunden (name, plz) VALUES ('Max', '12345');" },
+            { command: "UPDATE SET", description: "Aktualisiert vorhandene Daten in einer Tabelle.", example: "UPDATE kunden SET name = 'Max' WHERE id = 1;", task: "Ändere den Namen des Kunden mit ID 1.", solution: "UPDATE kunden SET name = 'Max' WHERE id = 1;" },
+            { command: "AVG", description: "Berechnet den Durchschnitt einer Spalte.", example: "SELECT AVG(preis) FROM produkte;", task: "Berechne den Durchschnittspreis der Produkte.", solution: "SELECT AVG(preis) FROM produkte;" },
+            { command: "MAX", description: "Findet den größten Wert einer Spalte.", example: "SELECT MAX(preis) FROM produkte;", task: "Finde den teuersten Artikel.", solution: "SELECT MAX(preis) FROM produkte;" },
+            { command: "MIN", description: "Findet den kleinsten Wert einer Spalte.", example: "SELECT MIN(preis) FROM produkte;", task: "Finde den günstigsten Artikel.", solution: "SELECT MIN(preis) FROM produkte;" },
+            { command: "NOW", description: "Gibt die aktuelle Uhrzeit zurück.", example: "SELECT NOW();", task: "Gib das aktuelle Datum und die Uhrzeit zurück.", solution: "SELECT NOW();" },
+            { command: "SUM", description: "Berechnet die Summe einer Spalte.", example: "SELECT SUM(preis) FROM produkte;", task: "Berechne die Gesamtsumme der Produktpreise.", solution: "SELECT SUM(preis) FROM produkte;" },
+            { command: "YEAR", description: "Extrahiert das Jahr aus einem Datum.", example: "SELECT YEAR(geburtsdatum) FROM kunden;", task: "Zeige das Geburtsjahr aller Kunden.", solution: "SELECT YEAR(geburtsdatum) FROM kunden;" },
+            { command: "COUNT", description: "Zählt die Anzahl der Datensätze.", example: "SELECT COUNT(*) FROM kunden;", task: "Zähle alle Kunden.", solution: "SELECT COUNT(*) FROM kunden;" },
+            { command: "JOIN", description: "Verknüpft zwei Tabellen.", example: "SELECT * FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;", task: "Zeige alle Kunden und ihre Bestellungen.", solution: "SELECT * FROM kunden JOIN bestellungen ON kunden.id = bestellungen.kunden_id;" }
+        ];
+
+        const commandList = document.getElementById("command-list");
+
+        sqlCommands.forEach(command => {
+            const div = document.createElement("div");
+            div.classList.add("command-card");
+            div.innerHTML = `<h3>${command.command}</h3><p>${command.description}</p>`;
+            div.addEventListener("click", () => showCommandDetails(command));
+            commandList.appendChild(div);
+        });
+
+        function showCommandDetails(command) {
+            const commandDetails = document.getElementById("command-details");
+            commandDetails.classList.remove("hidden");
+            commandDetails.innerHTML = `
+                <h2 class="text-3xl font-bold text-indigo-700">${command.command}</h2>
+                <p class="mt-4 text-gray-700">${command.description}</p>
+                <h3 class="text-xl font-semibold mt-6">Beispiel:</h3>
+                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.example}</pre>
+                <h3 class="text-xl font-semibold mt-6">Aufgabe:</h3>
+                <p class="text-gray-700">${command.task}</p>
+                <h3 class="text-xl font-semibold mt-6">Lösung:</h3>
+                <pre class="bg-gray-100 p-4 rounded-md mt-4 border-l-4 border-indigo-600 text-sm text-gray-800">${command.solution}</pre>
+            `;
+        }
+    </script>
 </body>
 </html>
