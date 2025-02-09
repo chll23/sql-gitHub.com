@@ -3,30 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lerne SQL-Befehle interaktiv</title>
-    
-    <!-- Tailwind CSS von CDN -->
+    <title>SQL Interaktive Lernhilfe</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
-    <!-- Eigene CSS-Datei -->
-    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css"> <!-- Dein Style-Link -->
 </head>
 <body>
-    <div class="p-8 bg-gradient-to-r from-blue-100 to-green-200 min-h-screen">
-        <h1 class="text-4xl font-extrabold mb-6 text-blue-900">Lerne SQL-Befehle interaktiv</h1>
+    <div class="p-8 bg-gray-100 min-h-screen">
+        <h1 class="text-4xl font-extrabold mb-6 text-blue-700">Lerne SQL-Befehle interaktiv</h1>
         
+        <!-- Index Section -->
         <div class="mb-8">
-            <h2 class="text-2xl font-semibold mb-4 text-blue-700">Index der SQL-Befehle</h2>
-            <ul id="command-list" class="list-disc pl-6">
-                <!-- Hier kommen die SQL-Befehle dynamisch hin -->
-            </ul>
+            <h2 class="text-2xl font-semibold mb-4">SQL-Befehle</h2>
+            <div id="command-list" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- SQL Befehle werden hier dynamisch geladen -->
+            </div>
         </div>
 
         <div id="command-details" class="hidden mt-10 p-8 bg-white rounded-xl shadow-2xl">
-            <!-- Detailansicht des Befehls -->
+            <!-- Details des ausgewählten SQL-Befehls -->
         </div>
 
-        <div id="task-container" class="task-container mt-8 p-6 bg-yellow-100 rounded-md shadow-md">
+        <div id="task-container" class="hidden mt-8 p-6 bg-yellow-100 rounded-md shadow-md">
             <h3 class="text-xl font-semibold mb-4">Aufgabe:</h3>
             <p id="task-text" class="text-gray-800"></p>
             <textarea id="sql-input" placeholder="Deine SQL-Abfrage hier eingeben..."></textarea>
@@ -35,7 +32,6 @@
         </div>
     </div>
 
-    <!-- JavaScript-Datei -->
-    <script src="script.js"></script>
+    <script src="script.js"></script> <!-- Dein JavaScript-Link -->
 </body>
 </html>
